@@ -1,0 +1,19 @@
+{
+  "name": "progetto_pa",
+  "version": "1.0.0",
+  "description": "Back-end per il superamento dell'esame di programmazione avanzata",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paolo95/ProgettoPA.git"
+  },
+  "author": "Compagnoni Paolo - Onori Simone",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Paolo95/ProgettoPA/issues"
+  },
+  "homepage": "https://github.com/Paolo95/ProgettoPA#readme"
+}
