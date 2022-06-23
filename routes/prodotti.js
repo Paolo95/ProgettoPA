@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Pool = require('pg').Pool;
 const db = require('../model/database');
 const Controller_prodotti = require('../controllers/controller_prodotti');
 const controller_prodotti = new Controller_prodotti();
 
 router.post("/lista", async (req, res) => {
 
-    const result = await controller_prodotti.getProdottiDisponibili();
+    const result = await controller_prodotti.getProdottiDisponibili(req.body);
     res.status(result[0]).json(result[1]);
 
 });

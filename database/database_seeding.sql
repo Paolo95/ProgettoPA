@@ -32,8 +32,9 @@ CREATE TABLE utente (
 INSERT INTO prodotto (nome_prodotto, tipologia, anno, disponibile)
 VALUES 
     ('U2 - One', 'Audio', 1992, true),
-    ('U2 - One (Official videoclip)', 'Video', 1992, FALSE),
-    ('Blanco, Mahmood - Brividi','Audio', 2022, false);
+    ('U2 - One (Official videoclip)', 'Video', 1992, false),
+    ('Blanco, Mahmood - Brividi','Audio', 2022, false),
+    ('PTN - Irene','Audio', 2018, true);
 
 INSERT INTO utente (cognome, nome, mail, ruolo, indirizzo, credito, id_prodotto)
 VALUES 

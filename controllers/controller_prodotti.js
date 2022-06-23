@@ -6,9 +6,15 @@ class Controller_prodotti {
     constructor(){}
     
 
-    async getProdottiDisponibili(){
+    async getProdottiDisponibili(listParams){
         try{
-            const prodotti = await Database.prodotto.findAll();
+            const prodotti = await Database.prodotto.findAll({
+                where: {
+                    disponibile: true,
+                    tipologia: listParams.tipologia,
+                    anno: listParams.anno,
+                }
+            });
             return [200, prodotti];
         }catch(err){
             return [500, 'SERVER ERROR: couldn\'t get all users: ' + err];
