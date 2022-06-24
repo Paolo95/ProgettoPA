@@ -7,6 +7,7 @@ class Controller_prodotti {
     
 
     async getProdottiDisponibili(listParams){
+        
         try{
             const prodotti = await Database.prodotto.findAll({
                 where: {

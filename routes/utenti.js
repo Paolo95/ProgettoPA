@@ -42,7 +42,16 @@ router.post('/register', async (req, res) => {
 });
 
 */
+router.post('/credito', verifyToken, async (req, res) => {
+    
+    let token = req.header('Authorization');
+    token = token.split(" ");
+    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
+    
+    const result = await controllerUtente.getCreditoResiduo(decoded, req.body);
+    res.status(result[0]).json(result[1]);
 
+});
 
 // login
 router.post('/login', async (req, res) => {
@@ -54,7 +63,7 @@ router.post('/login', async (req, res) => {
 
     */
 
-    var result = await controllerAccesso.login(req.body);
+    const result = await controllerAccesso.login(req.body);
     res.status(result[0]).header('Authorization', result[1]).json( { "token": result[1], "user": result[2] } );
 
 });

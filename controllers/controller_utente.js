@@ -16,6 +16,15 @@ class ControllerUtente {
         }
     
     }
+
+    async getCreditoResiduo(decoded){
+
+        const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
+        if( ! utente) return [404, 'ERRORE: utente [' + decoded.id_utente + '] non trovato'];
+
+        return [200, 'SUCCESS: il credito residuo dell\'utente [' + utente.nome + ' ' + utente.cognome + '] e\' ['
+            + utente.credito + ']'];
+    }
     
 
     async getUtente(idUtente){
