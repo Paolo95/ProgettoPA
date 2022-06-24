@@ -9,10 +9,14 @@ app.use(express.json());
 console.log('\n' + 'BACK END PA' + '\n');
 
 //rotte importate
-const usersRoute = require('./routes/prodotti');
+const rottaProdotti = require('./routes/prodotti');
+const rottaAcquisti = require('./routes/acquisti');
+const rottaUtenti = require('./routes/utenti');
 
 //rotte middleware
-app.use('/', usersRoute);
+app.use('/api/prodotti', rottaProdotti);
+app.use('/api/acquisti', rottaAcquisti);
+app.use('/api/utenti', rottaUtenti);
 
 // server port
 const port = process.env.PORT;

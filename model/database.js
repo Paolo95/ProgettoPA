@@ -46,7 +46,11 @@ const Prodotto = sequelize.define('prodotto', {
     disponibile: {
         type: Sequelize.BOOLEAN,
         allowNull: false
-    }
+    },
+    link: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
 }, { 
     timestamps: false,
     freezeTableName: true
@@ -58,6 +62,14 @@ const Utente = sequelize.define('utente', {
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
+    },
+    username: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    passwd: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
     cognome: {
         type: Sequelize.STRING,
@@ -79,15 +91,44 @@ const Utente = sequelize.define('utente', {
         type: Sequelize.STRING,
         allowNull: true
     },
-    id_prodotto: {
+    credito: {
         type: Sequelize.INTEGER,
+        allowNull: false
+    }
+
+}, { 
+    timestamps: false,
+    freezeTableName: true
+});
+
+const Acquisto = sequelize.define('acquisto', {
+    id_acquisto: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    utente: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        references: {
+            model: Utente,
+            key: 'id_utente'
+        }
+    },
+    prodotto: {
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
             model: Prodotto,
             key: 'id_prodotto'
         }
     },
-
+    data_acquisto: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    
 }, { 
     timestamps: false,
     freezeTableName: true
@@ -96,5 +137,6 @@ const Utente = sequelize.define('utente', {
 module.exports = {
     sequelize: sequelize,
     utente: Utente,
-    prodotto: Prodotto
+    prodotto: Prodotto,
+    acquisto: Acquisto
 };
