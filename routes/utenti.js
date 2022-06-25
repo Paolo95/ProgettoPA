@@ -60,7 +60,7 @@ router.post('/acquistiUtente', verificaToken, async (req, res) => {
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
     
-    const result = await controllerUtente.getAcquistiUtente(req.body);
+    const result = await controllerUtente.getAcquistiUtente(decoded);
     res.status(result[0]).json(result[1]);
 
 });
@@ -81,12 +81,8 @@ router.post('/login', async (req, res) => {
 });
 
 
-// elimina utente specifico
+// ricarica il credito di un utente specifico
 router.post('/ricaricaUtente', verificaToken, isAdmin, async (req, res) => {
-
-    let token = req.header('Authorization');
-    token = token.split(" ");
-    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
 
     const result = await controllerUtente.ricaricaUtente(req.body);
     res.status(result[0]).send(result[1]);

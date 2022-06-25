@@ -51,10 +51,10 @@ class ControllerUtente {
 
     }
 
-    async ricaricaUtente({idUtente, importo_ricarica}){
+    async ricaricaUtente({mailUtente, importo_ricarica}){
 
-        const utente = await Database.utente.findOne({where: { id_utente: idUtente}});
-        if( ! utente) return [404, 'ERRORE: utente [' + idUtente + '] non trovato'];
+        const utente = await Database.utente.findOne({where: { mail: mailUtente}});
+        if( ! utente) return [404, 'ERRORE: utente [' + mailUtente + '] non trovato'];
         
         const nuovo_credito = utente.credito + importo_ricarica;
         const creditoAggiornato = await Database.utente.update({ credito: nuovo_credito }, {
