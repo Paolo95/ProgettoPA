@@ -19,15 +19,6 @@ class Controller_acquisti {
         
         const dataAcquisto = getDataCorrente();
 
-        /* CREAZIONE NUOVO ACQUISTO
-        const acquisto = new Database.acquisto({
-
-            utente: utente.id_utente,
-            prodotto: datiProdotto.id_prodotto,
-            data_acquisto: dataAcquisto
-
-        });*/
-
         const acquistoSalvato = await Database.acquisto.create({ utente: utente.id_utente, prodotto: datiProdotto.id_prodotto, data_acquisto: dataAcquisto});
         if( ! acquistoSalvato) return [500, 'SERVER ERROR: impossibile salvare l\'acquisto'];
     

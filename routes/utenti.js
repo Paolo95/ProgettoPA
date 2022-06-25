@@ -53,6 +53,17 @@ router.post('/credito', verifyToken, async (req, res) => {
 
 });
 
+router.post('/acquistiUtente', verifyToken, async (req, res) => {
+    
+    let token = req.header('Authorization');
+    token = token.split(" ");
+    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
+    
+    const result = await controllerUtente.getAcquistiUtente(decoded, req.body);
+    res.status(result[0]).json(result[1]);
+
+});
+
 // login
 router.post('/login', async (req, res) => {
 

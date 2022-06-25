@@ -26,6 +26,23 @@ class ControllerUtente {
             + utente.credito + ']'];
     }
     
+    async getAcquistiUtente(decoded){
+       
+        /*
+            TODO: MANCA IL FILTRO PER DOWNLOAD ORIGINALE O AGGIUNTIVO
+        */
+        const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
+        if(!utente) return [404, 'ERRORE: utente [' + decoded.id_utente + '] non trovato'];
+        
+        try {
+            const acquistiUtente = await Database.acquisto.findAll({where: { utente: decoded.id_utente }});
+            return [200, acquistiUtente];
+        } catch{
+            return [404, 'ERRORE: lista degli acquisti dell\'utente [' + utente.id_utente + '] non trovata'];
+        }
+        
+        
+    }
 
     async getUtente(idUtente){
     
