@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const verifyToken = require('../middlewares/verifyToken');
+const isAdmin = require('../middlewares/isAdmin');
+const verificaToken = require('../middlewares/verificaToken');
 //const isAdmin = require('../middlewares/isAdmin');
 
 const ControllerAccesso = require('../controllers/controller_accesso');
@@ -42,7 +43,7 @@ router.post('/register', async (req, res) => {
 });
 
 */
-router.post('/credito', verifyToken, async (req, res) => {
+router.post('/credito', verificaToken, async (req, res) => {
     
     let token = req.header('Authorization');
     token = token.split(" ");
@@ -53,13 +54,13 @@ router.post('/credito', verifyToken, async (req, res) => {
 
 });
 
-router.post('/acquistiUtente', verifyToken, async (req, res) => {
+router.post('/acquistiUtente', verificaToken, async (req, res) => {
     
     let token = req.header('Authorization');
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
     
-    const result = await controllerUtente.getAcquistiUtente(decoded, req.body);
+    const result = await controllerUtente.getAcquistiUtente(req.body);
     res.status(result[0]).json(result[1]);
 
 });
@@ -79,17 +80,20 @@ router.post('/login', async (req, res) => {
 
 });
 
-/*
+
 // elimina utente specifico
-router.delete('/:userID', verifyToken, isAdmin, async (req, res) => {
+router.post('/ricaricaUtente', verificaToken, isAdmin, async (req, res) => {
 
-    var decoded = jwt.decode(req.header('auth-token'), process.env.TOKEN_SECRET); // decoding jwt
+    let token = req.header('Authorization');
+    token = token.split(" ");
+    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
 
-    var result = await userController.deleteUser(decoded, req.params.userID);
+    const result = await controllerUtente.ricaricaUtente(req.body);
     res.status(result[0]).send(result[1]);
 
 });
 
+/*
 
 // elimina collezione utenti
 router.delete('/', verifyToken, isAdmin, async (req, res) => {

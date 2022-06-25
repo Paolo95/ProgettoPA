@@ -11,7 +11,7 @@ class ControllerUtente {
             const users = await Database.utente.findAll();
             return [200, users];
         }catch{
-            return [500, 'SERVER ERROR: impossibile visualizzare tutti gli utenti'];
+            return [500, 'ERRORE SERVER: impossibile visualizzare tutti gli utenti'];
         }
     
     }
@@ -21,7 +21,7 @@ class ControllerUtente {
         const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
         if( ! utente) return [404, 'ERRORE: utente [' + decoded.id_utente + '] non trovato'];
 
-        return [200, 'SUCCESS: il credito residuo dell\'utente [' + utente.nome + ' ' + utente.cognome + '] e\' ['
+        return [200, 'SUCCESSO: il credito residuo dell\'utente [' + utente.nome + ' ' + utente.cognome + '] e\' ['
             + utente.credito + ']'];
     }
     
@@ -49,6 +49,25 @@ class ControllerUtente {
         if( ! utente) return [404, 'ERRORE: utente [' + idUtente + '] non trovato'];
         else return [200, utente];
 
+    }
+
+    async ricaricaUtente({idUtente, importo_ricarica}){
+
+        const utente = await Database.utente.findOne({where: { id_utente: idUtente}});
+        if( ! utente) return [404, 'ERRORE: utente [' + idUtente + '] non trovato'];
+        
+        const nuovo_credito = utente.credito + importo_ricarica;
+        const creditoAggiornato = await Database.utente.update({ credito: nuovo_credito }, {
+            where: {
+              id_utente: utente.id_utente
+            }
+          });
+
+        if( ! creditoAggiornato) return [500, 'ERRORE SERVER: impossibile ricaricare l\'accounte dell\'utente'];
+    
+        return [200, 'SUCCESSO: l\'utente [' + utente.nome + ' '+ utente.cognome +
+                       '] ha ricaricato con successo. Credito residuo: [' + nuovo_credito + ']'];
+    
     }
     
 /*

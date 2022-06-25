@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 //Le rotte seguenti non possono essere utilizzate se l'utente non posside il relativo token.
 //Il token si ottiene al login?
 
-function verifyToken(req, res, next){
+function verificaToken(req, res, next){
 
     // controllo della presenza del token nell'header
     let token = req.header('Authorization');
@@ -13,8 +13,8 @@ function verifyToken(req, res, next){
 
     try{
         // verifica della validità del token
-        const verified = jwt.verify(token[1], process.env.TOKEN_SECRET);
-        req.utente = verified;
+        const verificato = jwt.verify(token[1], process.env.TOKEN_SECRET);
+        req.utente = verificato;
 
         next();
 
@@ -25,4 +25,4 @@ function verifyToken(req, res, next){
 }
 
 
-module.exports = verifyToken;
+module.exports = verificaToken;

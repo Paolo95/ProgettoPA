@@ -19,7 +19,7 @@ class Controller_acquisti {
         const dataAcquisto = getDataCorrente();
 
         const acquistoSalvato = await Database.acquisto.create({ utente: utente.id_utente, prodotto: datiProdotto.id_prodotto, data_acquisto: dataAcquisto});
-        if( ! acquistoSalvato) return [500, 'SERVER ERROR: impossibile salvare l\'acquisto'];
+        if( ! acquistoSalvato) return [500, 'ERRORE SERVER: impossibile salvare l\'acquisto'];
     
         // aggiorna credito residuo dell'utente
         const creditoResiduo = utente.credito-1;
@@ -28,9 +28,9 @@ class Controller_acquisti {
               id_utente: utente.id_utente
             }
           });
-        if( ! creditoAggiornato) return [500, 'SERVER ERROR: impossibile aggiornare il credito residuo'];
+        if( ! creditoAggiornato) return [500, 'ERRORE SERVER: impossibile aggiornare il credito residuo'];
     
-        return [200, 'SUCCESS: l\'utente [' + utente.nome + ' '+ utente.cognome +
+        return [200, 'SUCCESSO: l\'utente [' + utente.nome + ' '+ utente.cognome +
                        '] ha acquistato con successo [' + prodotto.nome_prodotto + '], ' +
                             'il link è: ' + prodotto.link];
         

@@ -18,7 +18,7 @@ class Controller_prodotti {
             });
             return [200, prodotti];
         }catch(err){
-            return [500, 'SERVER ERROR: Non e\' possibile soddisfare la richiesta: ' + err];
+            return [500, 'ERRORE SERVER: Non e\' possibile soddisfare la richiesta: ' + err];
         }
     
     }
