@@ -1,5 +1,4 @@
 const Database = require('../model/database');
-const sequelize = require('sequelize');
 
 class ControllerUtente {
 

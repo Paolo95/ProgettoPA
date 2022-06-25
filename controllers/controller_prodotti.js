@@ -1,5 +1,5 @@
 const Database = require('../model/database');
-const sequelize = require('sequelize');
+
 
 class Controller_prodotti {
 
@@ -18,12 +18,10 @@ class Controller_prodotti {
             });
             return [200, prodotti];
         }catch(err){
-            return [500, 'SERVER ERROR: couldn\'t get all users: ' + err];
+            return [500, 'SERVER ERROR: Non e\' possibile soddisfare la richiesta: ' + err];
         }
     
     }
-
-
 
 /*
     async getUser(id){

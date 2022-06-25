@@ -1,5 +1,4 @@
 const Database = require('../model/database'); //model database
-const sequelize = require('sequelize');
 const getDataCorrente = require('../functions/funzioni_temporali');
 
 class Controller_acquisti {

@@ -1,15 +1,31 @@
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('progettopa', 'postgres', 'pa', {
-    host: 'localhost',
-    port: 5432,
-    dialect: 'postgres'
-});
 
+let Singleton = (function () {
+    let instance;
+
+    function createInstance() {
+        const sequelize = new Sequelize('progettopa', 'postgres', 'pa', {
+            host: 'localhost',
+            port: 5432,
+            dialect: 'postgres'
+        });
+        return sequelize;
+    }
+
+    return {
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+})();
 
 (async () => {
     
     try {
-        await sequelize.authenticate();
+        await Singleton.getInstance().authenticate();
         console.log('Connessione stabilita correttamente');
         } catch (error) {
         console.error('Impossibile stabilire una connesione, errore: ', error);
@@ -19,12 +35,12 @@ const sequelize = new Sequelize('progettopa', 'postgres', 'pa', {
 
 (async () => {
     
-    await sequelize.sync();
+    await Singleton.getInstance().sync();
     console.log("Sincronizzazione effettuta!");
 
 })();
 
-const Prodotto = sequelize.define('prodotto', {
+const Prodotto = Singleton.getInstance().define('prodotto', {
     id_prodotto: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -56,7 +72,7 @@ const Prodotto = sequelize.define('prodotto', {
     freezeTableName: true
 });
 
-const Utente = sequelize.define('utente', {
+const Utente = Singleton.getInstance().define('utente', {
     id_utente: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -101,7 +117,7 @@ const Utente = sequelize.define('utente', {
     freezeTableName: true
 });
 
-const Acquisto = sequelize.define('acquisto', {
+const Acquisto = Singleton.getInstance().define('acquisto', {
     id_acquisto: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -135,7 +151,7 @@ const Acquisto = sequelize.define('acquisto', {
 });
 
 module.exports = {
-    sequelize: sequelize,
+    sequelize: Singleton.getInstance(),
     utente: Utente,
     prodotto: Prodotto,
     acquisto: Acquisto
