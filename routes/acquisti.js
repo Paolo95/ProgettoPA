@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../model/database');
 const jwt = require('jsonwebtoken');
 const verificaToken = require('../middlewares/verificaToken');
-const Controller_acquisti = require('../controllers/controller_acquisti');
-const controller_acquisti = new Controller_acquisti();
+const Controller_acquisto = require('../controllers/controller_acquisto');
+const controller_acquisto = new Controller_acquisto();
 
 router.post("/acquistoId", verificaToken, async (req, res) => {
 
@@ -12,7 +11,7 @@ router.post("/acquistoId", verificaToken, async (req, res) => {
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
  
-    const result = await controller_acquisti.acquistoPerId(decoded, req.body);
+    const result = await controller_acquisto.acquistoPerId(decoded, req.body);
     res.status(result[0]).json(result[1]);
 
 });
