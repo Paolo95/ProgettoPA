@@ -7,7 +7,8 @@ let Singleton = (function () {
         const sequelize = new Sequelize('progettopa', 'postgres', 'pa', {
             host: 'localhost',
             port: 5432,
-            dialect: 'postgres'
+            dialect: 'postgres',
+            //logging: false
         });
         return sequelize;
     }

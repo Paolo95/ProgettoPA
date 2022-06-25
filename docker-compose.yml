@@ -1,0 +1,10 @@
+version: "2.2.3"
+services:
+  postgres:
+    container_name: progettopa
+    image: progettopa
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pa
+    ports: 
+      - '5432:5432'
