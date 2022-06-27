@@ -12,7 +12,7 @@ class ControllerAccesso {
     async login(loginData){
 
         // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
-        const utente = await Database.utente.findOne({username: loginData.username});
+        const utente = await Database.utente.findOne({where: {username: loginData.username}});
         if( ! utente) return [400, 'Username o email errati!'];
     
         // CONTROLO PASSWORD: compara la pw nel body con quella criptata nel db tramite bcrypt
