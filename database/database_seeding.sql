@@ -25,7 +25,7 @@ CREATE TABLE utente (
   mail VARCHAR(255),
   ruolo VARCHAR(50) NOT NULL,
   indirizzo VARCHAR(100),
-  credito INT
+  credito INT NOT NULL
 );
 
 DROP TABLE IF EXISTS acquisto;
@@ -40,7 +40,8 @@ CREATE TABLE acquisto (
   CONSTRAINT prodotto_fk
       FOREIGN KEY(prodotto)
         REFERENCES prodotto(id_prodotto),
-  data_acquisto DATE NOT NULL
+  data_acquisto DATE NOT NULL,
+  originale BOOLEAN NOT NULL
 );
 
 
@@ -59,10 +60,11 @@ VALUES
     ('faini98','$2a$12$Y8DXqFtpNeTzlBnm8cHZqupe1eG/EBOAySqkGs1REDhedtQmGjmKa', 'Faini', 'Aurora', 'aurorafaini@gmail.com', 'user', 'Via Giuseppe Mazzini 22 - Monteprandone (AP)', 7),
     ('schiavi92','$2a$12$rccf3ddKBAtF00Uzz38xA.8q5yJ/swYqHWS9jT3Ze1U0gfhYemCS.', 'Schiavi', 'Elise', 'eliseschiavi@gmail.com', 'admin', 'Via dell Olmo 7 - San Benedetto del Tronto (AP)', 7);
 
-INSERT INTO acquisto (utente, prodotto, data_acquisto)
+INSERT INTO acquisto (utente, prodotto, data_acquisto, originale)
 VALUES 
-    (1, 2, '2022-03-02'),
-    (1, 3, '2022-01-21'),
-    (2, 2, '2022-04-20'),
-    (2, 3, '2022-07-12'),
-    (3, 3, '2021-08-06');
+    (1, 2, '2022-03-02', true),
+    (1, 2, '2002-03-02', false),
+    (1, 3, '2022-01-21', true),
+    (2, 2, '2022-04-20', true),
+    (2, 3, '2022-07-12', true),
+    (3, 3, '2021-08-06', true);

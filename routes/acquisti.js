@@ -16,4 +16,15 @@ router.post("/acquistoId", verificaToken, async (req, res) => {
 
 });
 
+router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
+
+    let token = req.header('Authorization');
+    token = token.split(" ");
+    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
+ 
+    const result = await controller_acquisto.acquistoAggiuntivo(decoded, req.body);
+    res.status(result[0]).json(result[1]);
+
+});
+
 module.exports = router;

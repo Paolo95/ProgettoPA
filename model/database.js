@@ -102,7 +102,7 @@ const Utente = Singleton.getInstance().define('utente', {
     },
     ruolo: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
     indirizzo: {
         type: Sequelize.STRING,
@@ -145,6 +145,10 @@ const Acquisto = Singleton.getInstance().define('acquisto', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    originale: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    }
     
 }, { 
     timestamps: false,
