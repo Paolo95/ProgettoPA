@@ -12,11 +12,13 @@ console.log('\n' + 'BACK END PA' + '\n');
 const rottaProdotti = require('./routes/prodotti');
 const rottaAcquisti = require('./routes/acquisti');
 const rottaUtenti = require('./routes/utenti');
+const rottaRegali = require('./routes/regali');
 
 //rotte middleware
 app.use('/api/prodotti', rottaProdotti);
 app.use('/api/acquisti', rottaAcquisti);
 app.use('/api/utenti', rottaUtenti);
+app.use('/api/regali', rottaRegali);
 
 // server port
 const port = process.env.PORT;

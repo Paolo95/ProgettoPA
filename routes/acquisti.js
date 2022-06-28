@@ -13,10 +13,14 @@ router.post("/acquistoId", verificaToken, async (req, res) => {
  
     const result = await controller_acquisto.acquistoPerId(decoded, req.body);
     
-    try {
-        res.download(result[0]);
-    } catch{
-        return res.status(404, "File non trovato");
+    if(result.length === 1){
+        try {
+            res.download(result[0]);
+        } catch{
+            return res.status(404, "ERRORE: Impossibile scaricare il file");
+        }
+    }else{
+        res.status(result[0]).json(result[1]);
     }
     
 });
@@ -29,10 +33,37 @@ router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
  
     const result = await controller_acquisto.acquistoAggiuntivo(decoded, req.body);
 
-    try {
-        res.download(result[0]);
-    } catch{
-        return res.status(404, "File non trovato");
+    if(result.length === 1){
+        try {
+            res.download(result[0]);
+        } catch{
+            return res.status(404, "ERRORE: Impossibile scaricare il file");
+        }
+    }else{
+        res.status(result[0]).json(result[1]);
+    }
+
+});
+
+
+
+
+router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
+
+    let token = req.header('Authorization');
+    token = token.split(" ");
+    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
+ 
+    const result = await controller_acquisto.regaloAmico(decoded, req.body, req.params.email);
+
+    if(result.length === 1){
+        try {
+            res.download(result[0]);
+        } catch{
+            return res.status(404, "ERRORE: Impossibile scaricare il file");
+        }
+    }else{
+        res.status(result[0]).json(result[1]);
     }
 
 });

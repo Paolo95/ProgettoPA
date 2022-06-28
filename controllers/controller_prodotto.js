@@ -1,7 +1,7 @@
 const Database = require('../model/database');
 
 
-class Controller_prodotti {
+class Controller_prodotto {
 
     constructor(){}
     
@@ -25,4 +25,4 @@ class Controller_prodotti {
 
 }
 
-module.exports = Controller_prodotti;
+module.exports = Controller_prodotto;

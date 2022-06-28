@@ -109,7 +109,7 @@ const Utente = Singleton.getInstance().define('utente', {
         allowNull: true
     },
     credito: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.REAL,
         allowNull: false
     }
 
