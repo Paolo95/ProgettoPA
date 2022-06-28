@@ -148,6 +148,14 @@ const Acquisto = Singleton.getInstance().define('acquisto', {
     originale: {
         type: Sequelize.BOOLEAN,
         allowNull: false
+    },
+    mail_amico: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    download_amico: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true
     }
     
 }, { 

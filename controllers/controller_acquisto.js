@@ -31,10 +31,8 @@ class Controller_acquisti {
             }
           });
         if( ! creditoAggiornato) return [500, 'ERRORE SERVER: impossibile aggiornare il credito residuo'];
-    
-        return [200, 'SUCCESSO: l\'utente [' + utente.nome + ' '+ utente.cognome +
-                       '] ha acquistato con successo [' + prodotto.nome_prodotto + '], ' +
-                            'il link è: ' + prodotto.link];
+        
+       return [prodotto.link];
         
     }
 
@@ -64,7 +62,7 @@ class Controller_acquisti {
          });
        if( ! creditoAggiornato) return [500, 'ERRORE SERVER: impossibile aggiornare il credito residuo'];
    
-       return [200, 'SUCCESSO: l\'utente [' + utente.nome + ' '+ utente.cognome + '] ha diritto ad un download aggiuntivo [' + prodotto.nome_prodotto + '], ' + 'il link è: ' + prodotto.link];
+       return [prodotto.link];
     }
 
 }

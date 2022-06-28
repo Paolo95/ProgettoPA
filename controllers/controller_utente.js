@@ -1,5 +1,6 @@
 const Database = require('../model/database');
 const Factory = require('../functions/factoryErrori');
+const { sequelize } = require('../model/database');
 const factory = new Factory();
 
 class ControllerUtente {
@@ -32,11 +33,11 @@ class ControllerUtente {
         const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
         if(!utente) return [404, 'ERRORE: utente [' + decoded.id_utente + '] non trovato'];
         
-        try {
+        try {         
             const acquistiUtente = await Database.acquisto.findAll({where: { utente: decoded.id_utente, originale: tipologiaAcquisto }});
             return [200, acquistiUtente];
         } catch{
-            return [404, 'ERRORE: lista degli acquisti dell\'utente [' + utente.id_utente + '] non trovata'];
+            return [404, 'ERRORE: lista degli acquisti dell\'utente [' + utente.id_utente + '] non trovata!'];
         }        
     }
 

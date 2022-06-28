@@ -41,17 +41,19 @@ CREATE TABLE acquisto (
       FOREIGN KEY(prodotto)
         REFERENCES prodotto(id_prodotto),
   data_acquisto DATE NOT NULL,
-  originale BOOLEAN NOT NULL
+  originale BOOLEAN NOT NULL,
+  mail_amico VARCHAR(255),
+  download_amico BOOLEAN
 );
 
 
 INSERT INTO prodotto (nome_prodotto, tipologia, anno, disponibile, link)
 VALUES 
     ('U2 - One', 'Audio', 1992, false, null),
-    ('U2 - One (Official Music Video)', 'Video', 1992, true, 'https://univpm-my.sharepoint.com/:v:/g/personal/s1097946_studenti_univpm_it/EVEPv02VplxNqCC9_ydCjSkBC5Wzx4zHgMZ30XMT6H_zQw?e=PdyJEB'),
-    ('Mahmood, BLANCO - Brividi','Audio', 2022, true, 'https://univpm-my.sharepoint.com/:u:/g/personal/s1097946_studenti_univpm_it/ERjW3dzhXLtJiYNvoKPY9H4BmX-K_4_dvDK_9zYlNnmmQA?e=cXTrfD'),
+    ('U2 - One (Official Music Video)', 'Video', 1992, false, null),
+    ('Mahmood, BLANCO - Brividi','Audio', 2022, true, '../ProgettoPA/files/Mahmood, BLANCO - Brividi.mp3'),
     ('Pinguini Tattici Nucleari - Irene','Audio', 2018, false, null),
-    ('Radiohead - Creep (Official Music Video)', 'Video', 1992, false, null);
+    ('Radiohead - Creep (Official Music Video)', 'Video', 1992, true, '../ProgettoPA/files/Radiohead - Creep (Official Music Video).mp4');
 
 INSERT INTO utente (username, passwd, cognome, nome, mail, ruolo, indirizzo, credito)
 VALUES 
@@ -60,11 +62,13 @@ VALUES
     ('faini98','$2a$12$Y8DXqFtpNeTzlBnm8cHZqupe1eG/EBOAySqkGs1REDhedtQmGjmKa', 'Faini', 'Aurora', 'aurorafaini@gmail.com', 'user', 'Via Giuseppe Mazzini 22 - Monteprandone (AP)', 7),
     ('schiavi92','$2a$12$rccf3ddKBAtF00Uzz38xA.8q5yJ/swYqHWS9jT3Ze1U0gfhYemCS.', 'Schiavi', 'Elise', 'eliseschiavi@gmail.com', 'admin', 'Via dell Olmo 7 - San Benedetto del Tronto (AP)', 7);
 
-INSERT INTO acquisto (utente, prodotto, data_acquisto, originale)
+INSERT INTO acquisto (utente, prodotto, data_acquisto, originale, mail_amico, download_amico)
 VALUES 
-    (1, 2, '2022-03-02', true),
-    (1, 2, '2002-03-02', false),
-    (1, 3, '2022-01-21', true),
-    (2, 2, '2022-04-20', true),
-    (2, 3, '2022-07-12', true),
-    (3, 3, '2021-08-06', true);
+    (1, 2, '2022-03-02', true, null, null),
+    (1, 2, '2002-03-02', false, null, null),
+    (1, 3, '2022-07-21', false, null, null),
+    (2, 2, '2022-11-20', false, null, null),
+    (1, 3, '2022-01-21', true, 'prova@prova.com', false),
+    (2, 2, '2022-04-20', true, 'tizio@tizio.com', true),
+    (2, 3, '2022-07-12', true, null, null),
+    (3, 3, '2021-08-06', true, null, null);

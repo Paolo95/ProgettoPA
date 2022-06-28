@@ -2,7 +2,6 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const isAdmin = require('../middlewares/isAdmin');
 const verificaToken = require('../middlewares/verificaToken');
-//const isAdmin = require('../middlewares/isAdmin');
 
 const ControllerAccesso = require('../controllers/controller_accesso');
 const controllerAccesso = new ControllerAccesso();
