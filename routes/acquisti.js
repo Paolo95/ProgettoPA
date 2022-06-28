@@ -13,8 +13,11 @@ router.post("/acquistoId", verificaToken, async (req, res) => {
  
     const result = await controller_acquisto.acquistoPerId(decoded, req.body);
     
-    res.download(result[2]);
-    res.status(result[0]).json(result[1]);
+    try {
+        res.download(result[0]);
+    } catch{
+        return res.status(404, "File non trovato");
+    }
     
 });
 
@@ -31,8 +34,6 @@ router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
     } catch{
         return res.status(404, "File non trovato");
     }
-    
-    //res.status(result[0]).json(result[1]);
 
 });
 
