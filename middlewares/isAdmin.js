@@ -13,10 +13,10 @@ async function isAdmin(req, res, next){
 
     if(utente.ruolo === 'admin') next();
     else {
-        prova = factory.creaErrore({
+        errore = factory.creaErrore({
         tipoErrore: 'Unauthorized',
         messaggio: 'NON AUTORIZZATO: l\'utente [' + utente.username + '] non e\' un amministratore'});
-        return res.status(prova[0]).send(prova[1]);
+        return res.status(errore[0]).send(errore[1]);
     }
 }
 

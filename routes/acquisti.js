@@ -6,6 +6,8 @@ const Controller_acquisto = require('../controllers/controller_acquisto');
 const controller_acquisto = new Controller_acquisto();
 const JSZip = require('jszip');
 const fs = require('fs');
+const Factory = require('../functions/factoryErrori');
+const factory = new Factory();
 
 router.post("/acquistoId", verificaToken, async (req, res) => {
 
@@ -19,7 +21,10 @@ router.post("/acquistoId", verificaToken, async (req, res) => {
         try {
             res.download(result[0]);
         } catch{
-            return res.status(404, "ERRORE: Impossibile scaricare il file");
+            errore = factory.creaErrore({
+                tipoErrore: 'Internal Server Error',
+                messaggio: 'ERRORE SERVER: Impossibile scaricare il file'});
+            return res.status(errore[0]).send(errore[1]);
         }
     }else{
         res.status(result[0]).json(result[1]);
@@ -39,7 +44,10 @@ router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
         try {
             res.download(result[0]);
         } catch{
-            return res.status(404, "ERRORE: Impossibile scaricare il file");
+            errore = factory.creaErrore({
+                tipoErrore: 'Internal Server Error',
+                messaggio: 'ERRORE SERVER: Impossibile scaricare il file'});
+            return res.status(errore[0]).send(errore[1]);
         }
     }else{
         res.status(result[0]).json(result[1]);
@@ -59,7 +67,10 @@ router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
         try {
             res.download(result[0]);
         } catch{
-            return res.status(404, "ERRORE: Impossibile scaricare il file");
+            errore = factory.creaErrore({
+                tipoErrore: 'Internal Server Error',
+                messaggio: 'ERRORE SERVER: Impossibile scaricare il file'});
+            return res.status(errore[0]).send(errore[1]);
         }
     }else{
         res.status(result[0]).json(result[1]);
@@ -84,7 +95,10 @@ router.post("/acquistoMultiplo", verificaToken, async (req, res) => {
             res.download('./files/out.zip');
             });            
         } catch{
-            return res.status(404, "ERRORE: Impossibile scaricare il file");
+            errore = factory.creaErrore({
+                tipoErrore: 'Internal Server Error',
+                messaggio: 'ERRORE SERVER: Impossibile scaricare il file'});
+            return res.status(errore[0]).send(errore[1]);
         }
     }else{
         res.status(result[0]).json(result[1]);

@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const Factory = require('../functions/factoryErrori');
+const factory = new Factory();
 
 //Questo middleware può essere aggiunto ad ogni rotta (protetta o privta);
 //Le rotte seguenti non possono essere utilizzate se l'utente non posside il relativo token.
@@ -9,17 +11,24 @@ function verificaToken(req, res, next){
     // controllo della presenza del token nell'header
     let token = req.header('Authorization');
     token = token.split(" ");
-    if( ! token) return res.status(401).send('ACCESSO NEGATO');
-
+    if( ! token){ 
+        errore = factory.creaErrore({
+        tipoErrore: 'Unauthorized',
+        messaggio: 'ACCESSO NEGATO'});
+        return res.status(errore[0]).send(errore[1]);
+    }
+    
     try{
         // verifica della validità del token
         const verificato = jwt.verify(token[1], process.env.TOKEN_SECRET);
         req.utente = verificato;
-
         next();
 
-    }catch(err){
-        res.status(400).send('ERRORE: Token non valido: ' + err);
+    } catch(err){
+        errore = factory.creaErrore({
+            tipoErrore: 'Bad Request',
+            messaggio: 'ERRORE: Token non valido: ' + err});
+        return res.status(errore[0]).send(errore[1]);
     }
 
 }
