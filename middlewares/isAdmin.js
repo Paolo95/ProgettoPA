@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Database = require('../model/database');
-
+const Factory = require('../functions/factoryErrori');
+const factory = new Factory();
 
 async function isAdmin(req, res, next){
 
@@ -11,8 +12,12 @@ async function isAdmin(req, res, next){
     const utente = await Database.utente.findOne({where: {id_utente: decoded.id_utente}});
 
     if(utente.ruolo === 'admin') next();
-    else return res.status(401).send('NON AUTORIZZATO: l\'utente [' + utente.username + '] non e\' un amministratore');
-
+    else {
+        prova = factory.creaErrore({
+        tipoErrore: 'Unauthorized',
+        messaggio: 'NON AUTORIZZATO: l\'utente [' + utente.username + '] non e\' un amministratore'});
+        return res.status(prova[0]).send(prova[1]);
+    }
 }
 
 

@@ -81,7 +81,7 @@ router.post("/acquistoMultiplo", verificaToken, async (req, res) => {
             result[0].generateNodeStream({type:'nodebuffer',streamFiles:true})
                 .pipe(fs.createWriteStream('./files/out.zip'))
                 .on('finish', function(){
-                    res.download('./files/out.zip');
+            res.download('./files/out.zip');
             });            
         } catch{
             return res.status(404, "ERRORE: Impossibile scaricare il file");
