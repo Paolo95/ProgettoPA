@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const verificaToken = require('../middlewares/verificaToken');
 const Controller_acquisto = require('../controllers/controller_acquisto');
 const controller_acquisto = new Controller_acquisto();
+const JSZip = require('jszip');
+const fs = require('fs');
 
 router.post("/acquistoId", verificaToken, async (req, res) => {
 
@@ -45,9 +47,6 @@ router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
 
 });
 
-
-
-
 router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
 
     let token = req.header('Authorization');
@@ -55,7 +54,7 @@ router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
  
     const result = await controller_acquisto.regaloAmico(decoded, req.body, req.params.email);
-
+    
     if(result.length === 1){
         try {
             res.download(result[0]);
@@ -65,6 +64,31 @@ router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
     }else{
         res.status(result[0]).json(result[1]);
     }
+
+});
+
+router.post("/acquistoMultiplo", verificaToken, async (req, res) => {
+
+    let token = req.header('Authorization');
+    token = token.split(" ");
+    const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
+ 
+    const result = await controller_acquisto.acquistoMultiplo(decoded, req.body);
+    
+    if(result.length === 1){
+        
+        try {
+            result[0].generateNodeStream({type:'nodebuffer',streamFiles:true})
+                .pipe(fs.createWriteStream('./files/out.zip'))
+                .on('finish', function(){
+                    res.download('./files/out.zip');
+            });            
+        } catch{
+            return res.status(404, "ERRORE: Impossibile scaricare il file");
+        }
+    }else{
+        res.status(result[0]).json(result[1]);
+    }  
 
 });
 
