@@ -16,7 +16,7 @@ router.post("/ottieniRegalo/:email/:id_utente/:id_prodotto", async (req, res) =>
             errore = factory.creaErrore({
                 tipoErrore: 'Not Found',
                 messaggio: "ERRORE: Impossibile scaricare il file: " + err});
-            return res.status(errore[0], errore[1]);
+            return res.status(errore[0]).send(errore[1]);
         }
     }else{
         res.status(result[0]).json(result[1]);
