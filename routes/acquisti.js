@@ -8,6 +8,8 @@ const JSZip = require('jszip');
 const fs = require('fs');
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
+const ValidazioneRichieste = require('../functions/validazioneRichieste');
+const validazioneRichieste = new ValidazioneRichieste();
 
 //Rotta per effettuare l'acquisto di un prodotto originale tramite ID (dati utente passati tramite il token,
 //dati prodotto passati tramite il body della richiesta)
@@ -65,7 +67,10 @@ router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
     let token = req.header('Authorization');
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
- 
+    
+    const error = await validazioneRichieste.controlloMail(req.params.email);
+    if(error) return res.status(error[0]).send(error[1]);
+    
     const result = await controller_acquisto.regaloAmico(decoded, req.body, req.params.email);
     
     if(result.length === 1){
