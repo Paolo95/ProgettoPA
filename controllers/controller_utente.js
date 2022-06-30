@@ -1,13 +1,12 @@
 const Database = require('../model/database');
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
-const { sequelize } = require('../model/database');
 
 class ControllerUtente {
 
     constructor(){}
     
-
+    //Funzione che ritorna tutti gli utenti presenti nel db
     async getUtenti(){
 
         try{
@@ -18,11 +17,12 @@ class ControllerUtente {
                 tipoErrore: 'Internal Server Error',
                 messaggio: 'ERRORE SERVER: impossibile visualizzare tutti gli utenti'});
         }
-    
     }
 
+    //Funzione che ritorna il credito residuo di un utente autenticato
     async getCreditoResiduo(decoded){
-
+        
+        // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
         const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
         if( ! utente) return factory.creaErrore({
             tipoErrore: 'Not Found',
@@ -31,8 +31,10 @@ class ControllerUtente {
         return [200, 'SUCCESSO: il credito residuo dell\'utente ['+ utente.nome +' '+ utente.cognome +'] e\' ['+ utente.credito +']'];
     }
     
+    //Funzione che ritorna tutti gli acquisti di un utente filtrati in base al tipo (Originale/Aggiuntivo)
     async getAcquistiUtente(decoded, {tipologiaAcquisto}){
         
+        // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
         const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
         if(!utente) return factory.creaErrore({
             tipoErrore: 'Not Found',
@@ -48,23 +50,27 @@ class ControllerUtente {
         }        
     }
 
+    //Funzione che ritorna un utente del DB in base all id passato in ingresso
     async getUtente(idUtente){
-    
+        
+        // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
         const utente = await Database.utente.findOne({where: {id_utente: idUtente}});
         if( ! utente) return factory.creaErrore({
             tipoErrore: 'Not Found',
             messaggio: 'ERRORE: utente ['+ idUtente +'] non trovato'});
         else return [200, utente];
-
     }
 
+    //Funzione di ricarica del credito di un utente in base alla propria email e all'importo desiderato
     async ricaricaUtente({mailUtente, importo_ricarica}){
 
+        // CONTROLLO EMAIL: controlla se la mail inserita appartiene ad un utente registrato nel db
         const utente = await Database.utente.findOne({where: { mail: mailUtente}});
         if( ! utente) return factory.creaErrore({
             tipoErrore: 'Not Found',
             messaggio: 'ERRORE: utente ['+ mailUtente +'] non trovato'});
         
+        // AGGIORNAMENTO del credito nel db
         const nuovo_credito = utente.credito + importo_ricarica;
         const creditoAggiornato = await Database.utente.update({ credito: nuovo_credito }, {
             where: {
@@ -76,10 +82,8 @@ class ControllerUtente {
             tipoErrore: 'Internal Server Error',
             messaggio: 'ERRORE SERVER: impossibile ricaricare l\'accounte dell\'utente'});
     
-        return [200, 'SUCCESSO: l\'utente ['+ utente.nome +' '+ utente.cognome +'] ha ricaricato con successo. Credito residuo: ['+ nuovo_credito +']'];
-    
-    }
-    
+        return [200, 'SUCCESSO: l\'utente ['+ utente.nome +' '+ utente.cognome +'] ha ricaricato con successo. Credito residuo: ['+ nuovo_credito +']'];   
+    }    
 }
 
 module.exports = ControllerUtente;

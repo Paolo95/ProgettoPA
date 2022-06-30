@@ -9,8 +9,11 @@ const fs = require('fs');
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
 
+//Rotta per effettuare l'acquisto di un prodotto originale tramite ID (dati utente passati tramite il token,
+//dati prodotto passati tramite il body della richiesta)
 router.post("/acquistoId", verificaToken, async (req, res) => {
 
+    //decodifica del token; token = (id_utente, username, mail, ruolo)
     let token = req.header('Authorization');
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
@@ -28,10 +31,11 @@ router.post("/acquistoId", verificaToken, async (req, res) => {
         }
     }else{
         res.status(result[0]).json(result[1]);
-    }
-    
+    } 
 });
 
+//Rotta per effettuare l'acquisto aggiuntivo di un prodotto originale tramite ID (dati utente passati tramite il token,
+//dati prodotto passati tramite il body della richiesta)
 router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
 
     let token = req.header('Authorization');
@@ -52,9 +56,10 @@ router.post("/acquistoAggiuntivo", verificaToken, async (req, res) => {
     }else{
         res.status(result[0]).json(result[1]);
     }
-
 });
 
+//Rotta per effettuare l'acquisto e regalarlo ad un amico tramite ID (dati utente passati tramite il token,
+//dati prodotto passati tramite il body della richiesta insieme all'email dell'amico)
 router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
 
     let token = req.header('Authorization');
@@ -75,9 +80,10 @@ router.post("/regaloAmico/:email", verificaToken, async (req, res) => {
     }else{
         res.status(result[0]).json(result[1]);
     }
-
 });
 
+//Rotta per effettuare un acquisto di più prodotti (multiplo) tramite ID (dati utente passati tramite il token,
+//dati dei prodotti passati tramite il body della richiesta)
 router.post("/acquistoMultiplo", verificaToken, async (req, res) => {
 
     let token = req.header('Authorization');
@@ -102,8 +108,7 @@ router.post("/acquistoMultiplo", verificaToken, async (req, res) => {
         }
     }else{
         res.status(result[0]).json(result[1]);
-    }  
-
+    }
 });
 
 module.exports = router;

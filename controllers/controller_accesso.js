@@ -1,6 +1,5 @@
 const Database = require('../model/database');
 const jwt = require('jsonwebtoken');
-const { getDataCorrente } = require('../functions/funzioni_temporali');
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -19,14 +18,13 @@ class ControllerAccesso {
             tipoErrore: 'Bad Request',
             messaggio: 'ERRORE: username o email errati!'});
     
-         // CONTROLO PASSWORD: compara la pw nel body con quella criptata nel db tramite bcrypt
+        // CONTROLO PASSWORD: compara la pw nel body con quella criptata nel db tramite bcrypt
         const validPass = await bcrypt.compare(loginData.passwd, utente.passwd);
         if( ! validPass) return factory.creaErrore({
             tipoErrore: 'Bad Request',
             messaggio: 'Errore: password errata!'});
     
-        // CREAZIONE E ASSEGNAZIONE JWT: se l'utente è in possesso del token può fare azioni -> private routes middlewares
-        
+        // CREAZIONE E ASSEGNAZIONE TOKEN JWT: se l'utente è in possesso del token può fare azioni a lui dedicate
         const token = jwt.sign({
             id_utente: utente.id_utente, 
             username: utente.username,
@@ -36,7 +34,6 @@ class ControllerAccesso {
         process.env.TOKEN_SECRET);
 
         var utenteJson = {
-
             "id_utente": utente.id_utente,
             "username": utente.username,
             "email": utente.mail,
@@ -44,7 +41,6 @@ class ControllerAccesso {
         }
     
         return [200, token, utenteJson];
-    
     }
 }
 

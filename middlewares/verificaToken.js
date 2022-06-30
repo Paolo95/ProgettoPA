@@ -3,8 +3,8 @@ const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
 
 //Questo middleware può essere aggiunto ad ogni rotta (protetta o privta);
-//Le rotte seguenti non possono essere utilizzate se l'utente non posside il relativo token.
-//Il token si ottiene al login?
+//Le rotte in cui è utilizzato possono essere attraversate solo se l'utente posside il relativo token.
+//Il token si ottiene al login
 
 function verificaToken(req, res, next){
 

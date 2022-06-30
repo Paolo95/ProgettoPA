@@ -4,7 +4,6 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-
 app.use(express.json());
 console.log('\n' + 'BACK END PA' + '\n');
 
@@ -23,12 +22,3 @@ app.use('/api/regali', rottaRegali);
 // server port
 const port = process.env.PORT;
 app.listen(port, () => console.log('Listening on port ' + port));
-
-//gestione degli errori tramite middleware
-/*app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-    factoryErrori = new....
-  });
-  
-app.use(factoryErrori);*/

@@ -1,5 +1,7 @@
 const { Sequelize } = require('sequelize');
 
+// Uso del pattern Singleton per la gestione della connessione al Database
+
 let Singleton = (function () {
     let instance;
 
@@ -41,6 +43,8 @@ let Singleton = (function () {
 
 })();
 
+// Definizione del modello Sequelize del prodotto
+
 const Prodotto = Singleton.getInstance().define('prodotto', {
     id_prodotto: {
         type: Sequelize.INTEGER,
@@ -72,6 +76,8 @@ const Prodotto = Singleton.getInstance().define('prodotto', {
     timestamps: false,
     freezeTableName: true
 });
+
+// Definizione del modello Sequelize dell'utente
 
 const Utente = Singleton.getInstance().define('utente', {
     id_utente: {
@@ -117,6 +123,8 @@ const Utente = Singleton.getInstance().define('utente', {
     timestamps: false,
     freezeTableName: true
 });
+
+// Definizione del modello Sequelize dell'acquisto
 
 const Acquisto = Singleton.getInstance().define('acquisto', {
     id_acquisto: {

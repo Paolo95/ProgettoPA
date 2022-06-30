@@ -5,6 +5,7 @@ const controller_regalo = new Controller_regalo();
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
 
+//Rotta per effettuare il download del prodotto in regalo
 router.post("/ottieniRegalo/:email/:id_utente/:id_prodotto", async (req, res) => {
 
     const result = await controller_regalo.ottieniRegalo(req.params);
@@ -20,8 +21,7 @@ router.post("/ottieniRegalo/:email/:id_utente/:id_prodotto", async (req, res) =>
         }
     }else{
         res.status(result[0]).json(result[1]);
-    }
-    
+    }    
 });
 
 module.exports = router;

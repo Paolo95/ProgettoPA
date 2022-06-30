@@ -10,8 +10,7 @@ const ControllerUtente = require('../controllers/controller_utente');
 const controllerUtente = new ControllerUtente();
 
 
-// Definizione delle varie rotte per gli utenti
-
+//rotta per verificare il credito residuo di un utente (dati utente passati tramite il token)
 router.post('/credito', verificaToken, async (req, res) => {
     
     let token = req.header('Authorization');
@@ -20,9 +19,11 @@ router.post('/credito', verificaToken, async (req, res) => {
     
     const result = await controllerUtente.getCreditoResiduo(decoded, req.body);
     res.status(result[0]).json(result[1]);
-
 });
 
+// rotta per ottenere la lista degli acquisti effettuati dall'utente (dati dell'utente
+// ottenuti tramite il token JWT e tramite il body, viene indicata la tipologia di acquisto
+// differenziandola per download originale o aggiuntivo)
 router.post('/acquistiUtente', verificaToken, async (req, res) => {
     
     let token = req.header('Authorization');
@@ -31,10 +32,10 @@ router.post('/acquistiUtente', verificaToken, async (req, res) => {
     
     const result = await controllerUtente.getAcquistiUtente(decoded, req.body);
     res.status(result[0]).json(result[1]);
-
 });
 
-// login
+// rotta per ottenere il token JWT dell'utente passando le credenziali tramite il body della
+// richiesta.
 router.post('/login', async (req, res) => {
 
     /*
@@ -46,16 +47,15 @@ router.post('/login', async (req, res) => {
 
     const result = await controllerAccesso.login(req.body);
     res.status(result[0]).header('Authorization', result[1]).json( { "token": result[1], "user": result[2] } );
-
 });
 
 
-// ricarica il credito di un utente specifico
+// rotta per la ricarica del credito di un utente specifico (dati utente ottenuti tramite il
+// token JWT)
 router.post('/ricaricaUtente', verificaToken, isAdmin, async (req, res) => {
 
     const result = await controllerUtente.ricaricaUtente(req.body);
     res.status(result[0]).send(result[1]);
-
 });
 
 module.exports = router;

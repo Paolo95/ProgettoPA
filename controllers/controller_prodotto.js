@@ -7,7 +7,7 @@ class Controller_prodotto {
 
     constructor(){}
     
-
+    //Funzione che ritorna tutti i prodotti disponibili nel db
     async getProdottiDisponibili(listParams){
         
         try{
@@ -24,9 +24,7 @@ class Controller_prodotto {
                 tipoErrore: 'Internal Server Error',
                 messaggio: 'ERRORE SERVER: Non e\' possibile soddisfare la richiesta: ' + err});
         }
-    
     }
-
 }
 
 module.exports = Controller_prodotto;
