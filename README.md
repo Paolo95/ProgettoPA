@@ -1,5 +1,5 @@
 # Progetto programmazione avanzata
----
+
 ## Introduzione
 
 La relazione ha l'obiettivo di illustrare gli aspetti principali della realizzazione di un back-end in grado di gestire l'acquisto di un prodotto digitale sotto forma di audio o video.
@@ -9,8 +9,6 @@ La relazione ha l'obiettivo di illustrare gli aspetti principali della realizzaz
 - URL del repository pubblico: [https://github.com/Paolo95/ProgettoPA.git](https://github.com/Paolo95/ProgettoPA.git)
 - Commit ID: 
 - Data svolgimento esame: 13 luglio 2022
-
----
 
 ## Obiettivo del progetto
 
@@ -24,15 +22,15 @@ In aggiunta, è possibile effettuare un regalo ad un amico. Per questa operazion
 Infine, un utente con ruolo admin può effettuare la ricarica ad un utente semplicemente fornendo la email (relativa all'account dell'utente da ricare) e l'importo (numero di token) della ricarica. Entrambi i campi di questa richiesta essendo scritti dall'utente all'interno di due textbox nel nostro frontend e quindi sono opportunamente validati.
 Tutte le rotte che necessitano di un autenticazione da parte dell'utente sono autenticate mediante l'utilizzo di un token JWT.
 
----
-
 ## Strumenti utilizzati
 
 Di seguito, sono riportati i principali strumenti software utilizzati per sviluppare il back-end e per organizzare il lavoro in maniera collaborativa.
 
 ### Trello
 
-:::image type="content" source="Immagini README/Trello-logo.png" alt-text="Trello logo":::
+<p style="text-align:center;">
+    <img src="./Immagini/trello-logo.png?raw=true" width="50%" height="auto">
+</p>
 
 Trello è un software gestionale in stile Kanban che è stato uilizzato per organizzare i task nelle seguenti categorie in modo tale da avere in ogni momento un quadro generale dell'avanzamento del progetto:
 
@@ -45,7 +43,10 @@ Trello è un software gestionale in stile Kanban che è stato uilizzato per orga
 
 ### Gitkraken
 
-:::image type="content" source="Immagini README/gitkraken.png" alt-text="gitkaken-logo":::
+<p style="text-align:center;">
+    <img src="./Immagini/gitkraken-logo.png?raw=true" width="30%" height="auto">
+</p>
+
 
 Per la gesitone del repository Github, si è utilizzato **Gitkraken** che permette una visualizzazione grafica dei vari commit del repository.
 
@@ -53,7 +54,9 @@ Il repository pubblico è disponibile all'indirizzo: [https://github.com/Paolo95
 
 ### Postman
 
-:::image type="content" source="Immagini README/postman.png" alt-text="postman-logo":::
+<p style="text-align:center;">
+    <img src="./Immagini/postman-logo.png?raw=true" width="25%" height="auto">
+</p>
 
 Per effettuare i test delle richieste al back-end, è stato impiegato Postman organizzando la collection in sotto-cartelle suddivise in:
 - richieste standard: sono le richieste formulate in modo corretto e che non ritornano uno status diverso da 200;
@@ -65,22 +68,14 @@ Nel caso di richieste che mandano in download dei file video in formato .mp4, si
 
 Infine, uno strumento che è stato fondamentale nello sviluppo del codice in modo collaborativo è l'estensione **Live Share** fornita da Microsoft che ha permesso la l'editing in tempo reale del codice condividendo tutto il workspace del progetto disponendo di un canale vocale per discutere sugli aspetti fondamentali del lavoro in corso d'opera.
 
----
-
 ## Progettazione del software
 ### Diagrammi UML
 #### Class Diagram
 #### Sequence Diagram
 ### Schema E-R
 
----
-
 ## Descrizione dei design pattern utilizzati
 
----
-
 ## Avvio del progetto tramite Docker e Docker-compose
-
----
 
 ## Test del progetto con Postman e curl
