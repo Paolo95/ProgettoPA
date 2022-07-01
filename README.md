@@ -54,7 +54,7 @@ Il repository pubblico è disponibile all'indirizzo: [https://github.com/Paolo95
 
 ### Postman
 
-<p style="text-align:center;">
+<p align="center">
     <img src="./Immagini/postman-logo.png?raw=true" width="25%" height="auto">
 </p>
 
