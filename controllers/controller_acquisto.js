@@ -19,12 +19,6 @@ class Controller_acquisto {
       messaggio: "ERRORE: utente [" + decoded.id_utente + "] non trovato"
     });
 
-    // CONTROLLO CREDITO SUFFICIENTE: controlla se l'utente verificato abbia abbastanza credito per l'acquisto
-    if (utente.credito < 1) return factory.creaErrore({
-      tipoErrore: "Unauthorized",
-      messaggio: "ERRORE: credito residuo insufficiente"
-    });
-
     // CONTROLLO PRODOTTO DISPONIBILE: controlla se il prodotto selezionato è disponibile
     const prodotto = await Database.prodotto.findOne({
       where: { id_prodotto: datiProdotto.id_prodotto, disponibile: true }
@@ -32,6 +26,12 @@ class Controller_acquisto {
     if (!prodotto) return factory.creaErrore({
       tipoErrore: "Not Found",
       messaggio: "ERRORE: prodotto ["+ datiProdotto.id_prodotto +"] non trovato o momentaneamente non disponibile!"
+    });
+
+    // CONTROLLO CREDITO SUFFICIENTE: controlla se l'utente verificato abbia abbastanza credito per l'acquisto
+    if (utente.credito < prodotto.prezzo) return factory.creaErrore({
+      tipoErrore: "Unauthorized",
+      messaggio: "ERRORE: credito residuo insufficiente"
     });
 
     const dataAcquisto = getDataCorrente();
@@ -56,7 +56,7 @@ class Controller_acquisto {
     });
 
     // AGGIRNAMENTO CREDITO: aggiorna credito residuo dell'utente
-    const creditoResiduo = utente.credito - 1;
+    const creditoResiduo = utente.credito - prodotto.prezzo;
     const creditoAggiornato = await Database.utente.update({ credito: creditoResiduo},{ where: { id_utente: utente.id_utente }});
     if (!creditoAggiornato) return factory.creaErrore({
       tipoErrore: "Internal Server Error",
@@ -129,23 +129,23 @@ class Controller_acquisto {
   async regaloAmico(decoded, datiProdotto, mailAmico) {
     
     // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
-    const utente = await Database.utente.findOne({ where: { id_utente: decoded.id_utente }});
+    const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
     if (!utente) return factory.creaErrore({
       tipoErrore: "Not Found",
-      messaggio: "ERRORE: utente ["+ decoded.id_utente +"] non trovato"
-    });
-
-    // CONTROLLO CREDITO SUFFICIENTE: controlla se l'utente verificato abbia abbastanza credito per l'acquisto
-    if (utente.credito < 1.5) return factory.creaErrore({
-      tipoErrore: "Unauthorized",
-      messaggio: "ERRORE: credito residuo insufficiente"
-    });
+      messaggio: "ERRORE: utente [" + decoded.id_utente + "] non trovato"
+    });;
 
     // CONTROLLO PRODOTTO DISPONIBILE: controlla se il prodotto selezionato è disponibile
     const prodotto = await Database.prodotto.findOne({ where: { id_prodotto: datiProdotto.id_prodotto, disponibile: true }});
     if (!prodotto) return factory.creaErrore({
       tipoErrore: "Not Found",
       messaggio: "ERRORE: prodotto ["+ datiProdotto.id_prodotto +"] non trovato o momentaneamente non disponibile!"
+    });
+
+    // CONTROLLO CREDITO SUFFICIENTE: controlla se l'utente verificato abbia abbastanza credito per l'acquisto
+    if (utente.credito < (prodotto.prezzo + 0.5)) return factory.creaErrore({
+      tipoErrore: "Unauthorized",
+      messaggio: "ERRORE: credito residuo insufficiente"
     });
 
     const dataAcquisto = getDataCorrente();
@@ -174,7 +174,7 @@ class Controller_acquisto {
     });
 
     // AGGIRNAMENTO CREDITO: aggiorna credito residuo dell'utente
-    const creditoResiduo = utente.credito - 1.5;
+    const creditoResiduo = utente.credito - (prodotto.prezzo + 0.5);
     const creditoAggiornato = await Database.utente.update({ credito: creditoResiduo },{ where: { id_utente: utente.id_utente }});
     if (!creditoAggiornato) return factory.creaErrore({
       tipoErrore: "Internal Server Error",
@@ -188,14 +188,25 @@ class Controller_acquisto {
   async acquistoMultiplo(decoded, datiAcquisto) {
 
     // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
-    const utente = await Database.utente.findOne({ where: { id_utente: decoded.id_utente }});
+    const utente = await Database.utente.findOne({where: { id_utente: decoded.id_utente }});
     if (!utente) return factory.creaErrore({
       tipoErrore: "Not Found",
       messaggio: "ERRORE: utente [" + decoded.id_utente + "] non trovato"
     });
-
+    
     // CONTROLLO CREDITO SUFFICIENTE: controlla se l'utente verificato abbia abbastanza credito per l'acquisto
-    if (utente.credito < datiAcquisto.length) return factory.creaErrore({
+    let prezzoTotale = 0;
+    for(let i = 0; i < datiAcquisto.length; i++){
+      let prodotto = await Database.prodotto.findOne({ where: { id_prodotto: datiAcquisto[i].id_prodotto, disponibile: true }});
+      const acquistoPresente = await Database.acquisto.findOne({ where: { 
+        utente: utente.id_utente,
+        prodotto: datiAcquisto[i].id_prodotto }
+      });
+      if(!acquistoPresente){
+        prezzoTotale += prodotto.prezzo;
+      } else prezzoTotale += 1; 
+    }
+    if (utente.credito < prezzoTotale) return factory.creaErrore({
       tipoErrore: "Unauthorized",
       messaggio: "ERRORE: credito residuo insufficiente"
     });
@@ -249,7 +260,7 @@ class Controller_acquisto {
     }
 
     // AGGIRNAMENTO CREDITO: aggiorna credito residuo dell'utente
-    const creditoResiduo = utente.credito - datiAcquisto.length;
+    const creditoResiduo = utente.credito - prezzoTotale;
     const creditoAggiornato = await Database.utente.update({ credito: creditoResiduo },{ where: { id_utente: utente.id_utente }});
     if (!creditoAggiornato) return factory.creaErrore({
       tipoErrore: "Internal Server Error",
@@ -258,6 +269,15 @@ class Controller_acquisto {
 
     return [zip];
   }
+  //se riusciamo agestire l'errore con il middleware
+  /*async #getUtente(utenteDecoded){
+    const utente = await Database.utente.findOne({where: { id_utente: utenteDecoded.id_utente }});
+    if (!utente) return factory.creaErrore({
+      tipoErrore: "Not Found",
+      messaggio: "ERRORE: utente [" + utenteDecoded.id_utente + "] non trovato"
+    });
+    return utente;
+  }*/
 }
 
 module.exports = Controller_acquisto;

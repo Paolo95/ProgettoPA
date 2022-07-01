@@ -63,6 +63,10 @@ const Prodotto = Singleton.getInstance().define('prodotto', {
     anno: {
         type: Sequelize.INTEGER,
         allowNull: false
+    }, 
+    prezzo: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     },    
     disponibile: {
         type: Sequelize.BOOLEAN,

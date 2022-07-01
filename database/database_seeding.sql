@@ -9,7 +9,8 @@ CREATE TABLE prodotto (
   id_prodotto SERIAL PRIMARY KEY,
   nome_prodotto VARCHAR(100) NOT NULL,
   tipologia VARCHAR(255) NOT NULL,
-  anno INT NOT NULL,  
+  anno INT NOT NULL,
+  prezzo INT NOT NULL,  
   disponibile BOOLEAN NOT NULL,
   link VARCHAR(255)
 );
@@ -47,13 +48,13 @@ CREATE TABLE acquisto (
 );
 
 
-INSERT INTO prodotto (nome_prodotto, tipologia, anno, disponibile, link)
+INSERT INTO prodotto (nome_prodotto, tipologia, anno, prezzo, disponibile, link)
 VALUES 
-    ('U2 - One', 'Audio', 1992, false, null),
-    ('U2 - One (Official Music Video)', 'Video', 1992, false, null),
-    ('Mahmood, BLANCO - Brividi', 'Audio', 2022, true, './files/Mahmood, BLANCO - Brividi.mp3'),
-    ('Pinguini Tattici Nucleari - Irene', 'Audio', 2018, true, './files/Pinguini Tattici Nucleari - Irene.mp3'),
-    ('Radiohead - Creep (Official Music Video)', 'Video', 1992, true, './files/Radiohead - Creep (Official Music Video).mp4');
+    ('U2 - One', 'Audio', 1992, 2, false, null),
+    ('U2 - One (Official Music Video)', 'Video', 1992, 3, false, null),
+    ('Mahmood, BLANCO - Brividi', 'Audio', 2, 2022, true, './files/Mahmood, BLANCO - Brividi.mp3'),
+    ('Pinguini Tattici Nucleari - Irene', 'Audio', 2018, 2, true, './files/Pinguini Tattici Nucleari - Irene.mp3'),
+    ('Radiohead - Creep (Official Music Video)', 'Video', 1992, 3, true, './files/Radiohead - Creep (Official Music Video).mp4');
 
 INSERT INTO utente (username, passwd, cognome, nome, mail, ruolo, indirizzo, credito)
 VALUES 

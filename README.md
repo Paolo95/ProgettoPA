@@ -28,7 +28,7 @@ Di seguito, sono riportati i principali strumenti software utilizzati per svilup
 
 ### Trello
 
-<p style="text-align:center;">
+<p align="center">
     <img src="./Immagini/trello-logo.png?raw=true" width="50%" height="auto">
 </p>
 
@@ -43,7 +43,7 @@ Trello è un software gestionale in stile Kanban che è stato uilizzato per orga
 
 ### Gitkraken
 
-<p style="text-align:center;">
+<p align="center">
     <img src="./Immagini/gitkraken-logo.png?raw=true" width="30%" height="auto">
 </p>
 
