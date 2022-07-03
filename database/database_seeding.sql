@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS progettopa;
-CREATE DATABASE progettopa;
-
 \c progettopa
 
 DROP TABLE IF EXISTS prodotto;
