@@ -1,3 +1,7 @@
-FROM postgres:latest
-WORKDIR /usr/src
-ADD /database/database_seeding.sql /docker-entrypoint-initdb.d
+FROM node:latest
+WORKDIR /usr/app
+COPY package.json .
+RUN npm install
+COPY . .
+EXPOSE 8080
+CMD ["node", "index.js"]

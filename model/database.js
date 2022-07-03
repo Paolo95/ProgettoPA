@@ -1,51 +1,40 @@
 const { Sequelize } = require('sequelize');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Uso del pattern Singleton per la gestione della connessione al Database
 
-let Singleton = (function () {
-    let instance;
+class Singleton{
+    
+    static creaSingleton = (function () {
+        let instance;
 
-    function createInstance() {
-        const sequelize = new Sequelize('progettopa', 'postgres', 'pa', {
-            host: 'localhost',
-            port: 5432,
-            dialect: 'postgres',
-            //logging: false
-        });
-        return sequelize;
-    }
+        function createInstance() {
+            const sequelize = new Sequelize(process.env.PG_DATABASE, process.env.PG_USER, process.env.PG_PASSWORD, {
+                host: process.env.PG_HOST,
+                port: process.env.PG_PORT,
+                dialect: 'postgres',
+                logging: false
+            });
+            return sequelize;
+        }
 
-    return {
-        getInstance: function () {
-            if (!instance) {
-                instance = createInstance();
+        return {
+            getInstance: function () {
+                if (!instance) {
+                    instance = createInstance();
+                }
+                return instance;
             }
-            return instance;
-        }
-    };
-})();
+        };
+    })();
 
-(async () => {
-    
-    try {
-        await Singleton.getInstance().authenticate();
-        console.log('Connessione stabilita correttamente');
-        } catch (error) {
-        console.error('Impossibile stabilire una connesione, errore: ', error);
-        }
 
-})();
-
-(async () => {
-    
-    await Singleton.getInstance().sync();
-    console.log("Sincronizzazione effettuta!");
-
-})();
+}
 
 // Definizione del modello Sequelize del prodotto
 
-const Prodotto = Singleton.getInstance().define('prodotto', {
+const Prodotto = Singleton.creaSingleton.getInstance().define('prodotto', {
     id_prodotto: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -83,7 +72,7 @@ const Prodotto = Singleton.getInstance().define('prodotto', {
 
 // Definizione del modello Sequelize dell'utente
 
-const Utente = Singleton.getInstance().define('utente', {
+const Utente = Singleton.creaSingleton.getInstance().define('utente', {
     id_utente: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -130,7 +119,7 @@ const Utente = Singleton.getInstance().define('utente', {
 
 // Definizione del modello Sequelize dell'acquisto
 
-const Acquisto = Singleton.getInstance().define('acquisto', {
+const Acquisto = Singleton.creaSingleton.getInstance().define('acquisto', {
     id_acquisto: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -176,7 +165,7 @@ const Acquisto = Singleton.getInstance().define('acquisto', {
 });
 
 module.exports = {
-    sequelize: Singleton.getInstance(),
+    sequelize: Singleton.creaSingleton.getInstance(),
     utente: Utente,
     prodotto: Prodotto,
     acquisto: Acquisto

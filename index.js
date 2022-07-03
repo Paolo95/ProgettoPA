@@ -1,6 +1,6 @@
 const express = require('express');
-const pg = require('pg');
 const app = express();
+const database = require('./model/database');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -19,6 +19,26 @@ app.use('/api/acquisti', rottaAcquisti);
 app.use('/api/utenti', rottaUtenti);
 app.use('/api/regali', rottaRegali);
 
-// server port
+// porta server 
 const port = process.env.PORT;
 app.listen(port, () => console.log('Listening on port ' + port));
+
+
+// connessione al database
+
+connessioneDB();
+
+async function connessioneDB(){
+    await new Promise(res => setTimeout(res, 5000)); 
+    
+    try {
+
+        await database.sequelize;
+        console.log('Connessione stabilita correttamente');
+    
+        await database.sequelize.sync();
+        console.log("Sincronizzazione effettuta!"); 
+    } catch (error) {
+        console.error('Impossibile stabilire una connessione, errore: ', error);
+    }
+}
