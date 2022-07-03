@@ -2,7 +2,7 @@ const Database = require('../model/database');
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
 
-class ControllerUtente {
+class Controller_utente {
 
     constructor(){}
     
@@ -86,5 +86,5 @@ class ControllerUtente {
     }    
 }
 
-module.exports = ControllerUtente;
+module.exports = Controller_utente;
 

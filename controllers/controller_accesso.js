@@ -6,7 +6,7 @@ dotenv.config();
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();
 
-class ControllerAccesso {
+class Controller_accesso {
 
     constructor(){}
 
@@ -44,4 +44,4 @@ class ControllerAccesso {
     }
 }
 
-module.exports = ControllerAccesso;
+module.exports = Controller_accesso;

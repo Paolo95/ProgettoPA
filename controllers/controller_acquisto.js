@@ -1,5 +1,6 @@
 const Database = require("../model/database"); //model database
-const getDataCorrente = require("../functions/funzioni_temporali");
+const FunzioniTemporali = require("../functions/funzioniTemporali");
+const funzioneTemporale = new FunzioniTemporali();
 const JSZip = require("jszip");
 const fs = require("fs");
 const Factory = require("../functions/factoryErrori");
@@ -34,7 +35,7 @@ class Controller_acquisto {
       messaggio: "ERRORE: credito residuo insufficiente"
     });
 
-    const dataAcquisto = getDataCorrente();
+    const dataAcquisto = funzioneTemporale.getDataCorrente();
     // CONTROLLO ACQUISTO GIA' EFFETTUATO: se già effettuato non autorizza un ulteriore acquisto/download
     const acquistoPresente = await Database.acquisto.findOne({
       where: { utente: utente.id_utente, prodotto: prodotto.id_prodotto },
@@ -89,7 +90,7 @@ class Controller_acquisto {
       messaggio: "ERRORE: prodotto ["+ datiProdotto.id_prodotto +"] non trovato o momentaneamente non disponibile!"
     });
 
-    const dataAcquisto = getDataCorrente();
+    const dataAcquisto = funzioneTemporale.getDataCorrente();
 
     // CONTROLLO ACQUISTO AGGIUNTIVO: controlla se l'acquisto è effettivamente un acquisto aggiuntivo
     const acquistoOriginale = await Database.acquisto.findOne({where: {
@@ -148,7 +149,7 @@ class Controller_acquisto {
       messaggio: "ERRORE: credito residuo insufficiente"
     });
 
-    const dataAcquisto = getDataCorrente();
+    const dataAcquisto = funzioneTemporale.getDataCorrente();
     let isOriginal = false;
 
     // CONTROLLO ACQUISTO: controlla se l'acquisto è originale o aggiuntivo per l'utente che compra il regalo
@@ -225,7 +226,7 @@ class Controller_acquisto {
       zip.file(prodotto.link, fileFS);
     }
 
-    const dataAcquisto = getDataCorrente();
+    const dataAcquisto = funzioneTemporale.getDataCorrente();
     // CONTROLLO ACQUISTO: controlla se ogni acquisto è originale o aggiuntivo per l'utente che compra i diversi prodotti
     for (let i = 0; i < datiAcquisto.length; i++) {
       const acquistoPresente = await Database.acquisto.findOne({ where: { 
@@ -269,7 +270,7 @@ class Controller_acquisto {
 
     return [zip];
   }
-  //se riusciamo agestire l'errore con il middleware
+  //se riusciamo a gestire l'errore con il middleware
   /*async #getUtente(utenteDecoded){
     const utente = await Database.utente.findOne({where: { id_utente: utenteDecoded.id_utente }});
     if (!utente) return factory.creaErrore({

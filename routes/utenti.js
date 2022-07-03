@@ -2,10 +2,10 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const isAdmin = require('../middlewares/isAdmin');
 const verificaToken = require('../middlewares/verificaToken');
-const ControllerAccesso = require('../controllers/controller_accesso');
-const controllerAccesso = new ControllerAccesso();
-const ControllerUtente = require('../controllers/controller_utente');
-const controllerUtente = new ControllerUtente();
+const Controller_accesso = require('../controllers/controller_accesso');
+const controller_accesso = new Controller_accesso();
+const Controller_utente = require('../controllers/controller_utente');
+const controller_utente = new Controller_utente();
 const ValidazioneRichieste = require('../functions/validazioneRichieste');
 const validazioneRichieste = new ValidazioneRichieste();
 
@@ -16,7 +16,7 @@ router.post('/credito', verificaToken, async (req, res) => {
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
 
-    const result = await controllerUtente.getCreditoResiduo(decoded, req.body);
+    const result = await controller_utente.getCreditoResiduo(decoded, req.body);
     res.status(result[0]).json(result[1]);
 });
 
@@ -29,7 +29,7 @@ router.post('/acquistiUtente', verificaToken, async (req, res) => {
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
     
-    const result = await controllerUtente.getAcquistiUtente(decoded, req.body);
+    const result = await controller_utente.getAcquistiUtente(decoded, req.body);
     res.status(result[0]).json(result[1]);
 });
 
@@ -42,7 +42,7 @@ router.post('/login', async (req, res) => {
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     */
-    const result = await controllerAccesso.login(req.body);
+    const result = await controller_accesso.login(req.body);
     res.status(result[0]).header('Authorization', result[1]).json( { "token": result[1], "user": result[2] } );
 });
 
@@ -57,7 +57,7 @@ router.post('/ricaricaUtente', verificaToken, isAdmin, async (req, res) => {
     error = await validazioneRichieste.controlloImportoRicarica(req.body);
     if(error) return res.status(error[0]).send(error[1]);
 
-    const result = await controllerUtente.ricaricaUtente(req.body);
+    const result = await controller_utente.ricaricaUtente(req.body);
     res.status(result[0]).send(result[1]);
 });
 
