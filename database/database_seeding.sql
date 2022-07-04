@@ -49,7 +49,7 @@ INSERT INTO prodotto (nome_prodotto, tipologia, anno, prezzo, disponibile, link)
 VALUES 
     ('U2 - One', 'Audio', 1992, 2, false, null),
     ('U2 - One (Official Music Video)', 'Video', 1992, 3, false, null),
-    ('Mahmood, BLANCO - Brividi', 'Audio', 2, 2022, true, './files/Mahmood, BLANCO - Brividi.mp3'),
+    ('Mahmood, BLANCO - Brividi', 'Audio', 2022, 2, true, './files/Mahmood, BLANCO - Brividi.mp3'),
     ('Pinguini Tattici Nucleari - Irene', 'Audio', 2018, 2, true, './files/Pinguini Tattici Nucleari - Irene.mp3'),
     ('Radiohead - Creep (Official Music Video)', 'Video', 1992, 3, true, './files/Radiohead - Creep (Official Music Video).mp4');
 

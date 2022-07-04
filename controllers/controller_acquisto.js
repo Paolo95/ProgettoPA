@@ -203,7 +203,8 @@ class Controller_acquisto {
         utente: utente.id_utente,
         prodotto: datiAcquisto[i].id_prodotto }
       });
-      if(!acquistoPresente){
+      
+      if(acquistoPresente){
         prezzoTotale += prodotto.prezzo;
       } else prezzoTotale += 1; 
     }
