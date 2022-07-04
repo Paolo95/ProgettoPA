@@ -37,11 +37,6 @@ router.post('/acquistiUtente', verificaToken, async (req, res) => {
 // richiesta.
 router.post('/login', async (req, res) => {
 
-    /*
-    // LOGIN VALIDATION
-    const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    */
     const result = await controller_accesso.login(req.body);
     res.status(result[0]).header('Authorization', result[1]).json( { "token": result[1], "user": result[2] } );
 });

@@ -16,7 +16,7 @@ class Controller_accesso {
         const utente = await Database.utente.findOne({where: {username: loginData.username}});
         if( ! utente) return factory.creaErrore({
             tipoErrore: 'Bad Request',
-            messaggio: 'ERRORE: username o email errati!'});
+            messaggio: 'ERRORE: username errato!'});
     
         // CONTROLO PASSWORD: compara la pw nel body con quella criptata nel db tramite bcrypt
         const validPass = await bcrypt.compare(loginData.passwd, utente.passwd);
