@@ -19,7 +19,7 @@ class ValidazioneRichieste{
   
     async controlloImportoRicarica(importoRichiesta){
             
-        if (!regexNumber.test(importoRichiesta.importo_ricarica) || importoRichiesta.importo_ricarica < 0.5){
+        if (!regexNumber.test(importoRichiesta.importo_ricarica) || importoRichiesta.importo_ricarica < 1){
             return factory.creaErrore({
                 tipoErrore: 'Bad Request',
                 messaggio: 'ERRORE: l\'importo della ricarica non e\' valido!'
