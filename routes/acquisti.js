@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const verificaToken = require('../middlewares/verificaToken');
 const Controller_acquisto = require('../controllers/controller_acquisto');
 const controller_acquisto = new Controller_acquisto();
-const JSZip = require('jszip');
 const fs = require('fs');
 const Factory = require('../functions/factoryErrori');
 const factory = new Factory();

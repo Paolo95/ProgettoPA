@@ -14,8 +14,8 @@ class Controller_utente {
             return [200, users];
         }catch{
             return factory.creaErrore({
-                tipoErrore: 'Internal Server Error',
-                messaggio: 'ERRORE SERVER: impossibile visualizzare tutti gli utenti'});
+               tipoErrore: 'Internal Server Error',
+               messaggio: 'ERRORE SERVER: impossibile visualizzare tutti gli utenti'});
         }
     }
 

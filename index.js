@@ -29,8 +29,7 @@ app.listen(port, () => console.log('Listening on port ' + port));
 connessioneDB();
 
 async function connessioneDB(){
-    await new Promise(res => setTimeout(res, 5000)); 
-    
+       
     try {
 
         await database.sequelize;
