@@ -16,7 +16,7 @@ router.post('/credito', verificaToken, async (req, res) => {
     token = token.split(" ");
     const decoded = jwt.decode(token[1], process.env.TOKEN_SECRET);
 
-    const result = await controller_utente.getCreditoResiduo(decoded, req.body);
+    const result = await controller_utente.getCreditoResiduo(decoded);
     res.status(result[0]).json(result[1]);
 });
 

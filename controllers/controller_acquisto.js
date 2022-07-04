@@ -271,15 +271,6 @@ class Controller_acquisto {
 
     return [zip];
   }
-  //se riusciamo a gestire l'errore con il middleware
-  /*async #getUtente(utenteDecoded){
-    const utente = await Database.utente.findOne({where: { id_utente: utenteDecoded.id_utente }});
-    if (!utente) return factory.creaErrore({
-      tipoErrore: "Not Found",
-      messaggio: "ERRORE: utente [" + utenteDecoded.id_utente + "] non trovato"
-    });
-    return utente;
-  }*/
 }
 
 module.exports = Controller_acquisto;

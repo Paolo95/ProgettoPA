@@ -5,20 +5,7 @@ const factory = new Factory();
 class Controller_utente {
 
     constructor(){}
-    
-    //Funzione che ritorna tutti gli utenti presenti nel db
-    async getUtenti(){
-
-        try{
-            const users = await Database.utente.findAll();
-            return [200, users];
-        }catch{
-            return factory.creaErrore({
-               tipoErrore: 'Internal Server Error',
-               messaggio: 'ERRORE SERVER: impossibile visualizzare tutti gli utenti'});
-        }
-    }
-
+   
     //Funzione che ritorna il credito residuo di un utente autenticato
     async getCreditoResiduo(decoded){
         
@@ -48,17 +35,6 @@ class Controller_utente {
                 tipoErrore: 'Not Found',
                 messaggio: 'ERRORE: lista degli acquisti dell\'utente ['+ utente.id_utente +'] non trovata!'});
         }        
-    }
-
-    //Funzione che ritorna un utente del DB in base all id passato in ingresso
-    async getUtente(idUtente){
-        
-        // CONTROLLO UTENTE REGISTRATO: controlla se l'username è nel db
-        const utente = await Database.utente.findOne({where: {id_utente: idUtente}});
-        if( ! utente) return factory.creaErrore({
-            tipoErrore: 'Not Found',
-            messaggio: 'ERRORE: utente ['+ idUtente +'] non trovato'});
-        else return [200, utente];
     }
 
     //Funzione di ricarica del credito di un utente in base alla propria email e all'importo desiderato
