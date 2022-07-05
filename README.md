@@ -7,7 +7,6 @@ La relazione ha l'obiettivo di illustrare gli aspetti principali della realizzaz
 ## Dati rilevanti per il progetto
 
 - URL del repository pubblico: [https://github.com/Paolo95/ProgettoPA.git](https://github.com/Paolo95/ProgettoPA.git)
-- Commit ID: 
 - Data svolgimento esame: 13 luglio 2022
 
 ## Obiettivo del progetto
