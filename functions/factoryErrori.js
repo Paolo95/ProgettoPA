@@ -28,10 +28,10 @@ class ErroreInternalServerError{
 
 class FactoryErrore{
     creaErrore(data) {
-        if(data.tipoErrore == 'Bad Request') return new ErroreBadRequest(data); //400
-        if(data.tipoErrore == 'Unauthorized') return new ErroreUnauthorized(data); //401
-        if(data.tipoErrore == 'Not Found') return new ErroreNotFound(data); // 404
-        if(data.tipoErrore == 'Internal Server Error') return ErroreInternalServerError(data); //500
+        if(data.tipoErrore == 'Bad Request') return new ErroreBadRequest(data);
+        if(data.tipoErrore == 'Unauthorized') return new ErroreUnauthorized(data);
+        if(data.tipoErrore == 'Not Found') return new ErroreNotFound(data);
+        if(data.tipoErrore == 'Internal Server Error') return ErroreInternalServerError(data);
     }
 }
 
